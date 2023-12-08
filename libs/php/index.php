@@ -104,127 +104,15 @@
                         </td>
                     </tr>
 
-                    <tr>
-                        <td class="align-middle text-nowrap">
-                            Ace, Tamarra
-                        </td>
-                        <td class="align-middle text-nowrap d-none d-md-table-cell">
-                            Support
-                        </td>
-                        <td class="align-middle text-nowrap d-none d-md-table-cell">
-                            Munich
-                        </td>
-                        <td class="align-middle text-nowrap d-none d-md-table-cell">
-                            tacem@vinaora.com
-                        </td>
-                        <td class="text-end text-nowrap">
-                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editPersonnelModal" data-id="23">
-                                <i class="fa-solid fa-pencil fa-fw"></i>
-                            </button>
-                            <button type="button" class="btn btn-primary btn-sm deletePersonnelBtn" data-id="23">
-                                <i class="fa-solid fa-trash fa-fw"></i>
-                            </button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="align-middle text-nowrap">
-                            Ace, Tamarra
-                        </td>
-                        <td class="align-middle text-nowrap d-none d-md-table-cell">
-                            Support
-                        </td>
-                        <td class="align-middle text-nowrap d-none d-md-table-cell">
-                            Munich
-                        </td>
-                        <td class="align-middle text-nowrap d-none d-md-table-cell">
-                            tacem@vinaora.com
-                        </td>
-                        <td class="text-end text-nowrap">
-                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editPersonnelModal" data-id="23">
-                                <i class="fa-solid fa-pencil fa-fw"></i>
-                            </button>
-                            <button type="button" class="btn btn-primary btn-sm deletePersonnelBtn" data-id="23">
-                                <i class="fa-solid fa-trash fa-fw"></i>
-                            </button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="align-middle text-nowrap">
-                            Ace, Tamarra
-                        </td>
-                        <td class="align-middle text-nowrap d-none d-md-table-cell">
-                            Support
-                        </td>
-                        <td class="align-middle text-nowrap d-none d-md-table-cell">
-                            Munich
-                        </td>
-                        <td class="align-middle text-nowrap d-none d-md-table-cell">
-                            tacem@vinaora.com
-                        </td>
-                        <td class="text-end text-nowrap">
-                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editPersonnelModal" data-id="23">
-                                <i class="fa-solid fa-pencil fa-fw"></i>
-                            </button>
-                            <button type="button" class="btn btn-primary btn-sm deletePersonnelBtn" data-id="23">
-                                <i class="fa-solid fa-trash fa-fw"></i>
-                            </button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="align-middle text-nowrap">
-                            Ace, Tamarra
-                        </td>
-                        <td class="align-middle text-nowrap d-none d-md-table-cell">
-                            Support
-                        </td>
-                        <td class="align-middle text-nowrap d-none d-md-table-cell">
-                            Munich
-                        </td>
-                        <td class="align-middle text-nowrap d-none d-md-table-cell">
-                            tacem@vinaora.com
-                        </td>
-                        <td class="text-end text-nowrap">
-                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editPersonnelModal" data-id="23">
-                                <i class="fa-solid fa-pencil fa-fw"></i>
-                            </button>
-                            <button type="button" class="btn btn-primary btn-sm deletePersonnelBtn" data-id="23">
-                                <i class="fa-solid fa-trash fa-fw"></i>
-                            </button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="align-middle text-nowrap">
-                            Ace, Tamarra
-                        </td>
-                        <td class="align-middle text-nowrap d-none d-md-table-cell">
-                            Support
-                        </td>
-                        <td class="align-middle text-nowrap d-none d-md-table-cell">
-                            Munich
-                        </td>
-                        <td class="align-middle text-nowrap d-none d-md-table-cell">
-                            tacem@vinaora.com
-                        </td>
-                        <td class="text-end text-nowrap">
-                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editPersonnelModal" data-id="23">
-                                <i class="fa-solid fa-pencil fa-fw"></i>
-                            </button>
-                            <button type="button" class="btn btn-primary btn-sm deletePersonnelBtn" data-id="23">
-                                <i class="fa-solid fa-trash fa-fw"></i>
-                            </button>
-                        </td>
-                    </tr>
-
                 </table>
             </div>
 
             <div class="tab-pane" id="departments-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-                <table class="table table-hover">
-                    <tr>
+                <table  class="table table-hover">
+                    <tbody id="personal_data">
+
+                    </tbody>
+                    <!-- <tr>
                         <td class="align-middle text-nowrap">
                             Human resources
                         </td>
@@ -239,7 +127,7 @@
                                 <i class="fa-solid fa-trash fa-fw"></i>
                             </button>
                         </td>
-                    </tr>
+                    </tr> -->
 
                 </table>
             </div>
