@@ -79,6 +79,7 @@
 
         <div class="tab-content bg-white">
 
+            <!-- pesonel tab and table -->
             <div class="tab-pane show active" id="personnel-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
                 <table class="table table-hover">
                     <tr>
@@ -107,12 +108,13 @@
                 </table>
             </div>
 
+            <!-- departments tab and table -->
             <div class="tab-pane" id="departments-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-                <table  class="table table-hover">
-                    <tbody id="personal_data">
+                <table class="table table-hover">
+                    <tbody>
 
                     </tbody>
-                    <!-- <tr>
+                    <tr>
                         <td class="align-middle text-nowrap">
                             Human resources
                         </td>
@@ -127,11 +129,12 @@
                                 <i class="fa-solid fa-trash fa-fw"></i>
                             </button>
                         </td>
-                    </tr> -->
+                    </tr>
 
                 </table>
             </div>
 
+            <!-- locations tab and table -->
             <div class="tab-pane" id="locations-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
                 <table class="table table-hover">
                     <tr>
