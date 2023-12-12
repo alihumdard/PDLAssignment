@@ -1,7 +1,7 @@
 <?php
 
 	// example use from browser
-	// http://localhost/companydirectory/libs/php/getAllDepartments.php
+	// http://localhost/companydirectory/libs/php/getAllLocations.php
 
 	// remove next two lines for production	
 	
@@ -33,7 +33,7 @@
 	}	
 
 	// SQL does not accept parameters and so is not prepared
-	$query = 'SELECT d.id, d.name, d.locationID, l.name as location FROM department d LEFT JOIN location l ON (l.id = d.locationID) ORDER BY d.id, d.name';
+	$query = 'SELECT l.id, l.name FROM location l ORDER BY l.id, l.name';
 	$result = $conn->query($query);
 	
 	if (!$result) {

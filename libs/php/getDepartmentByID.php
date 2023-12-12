@@ -41,7 +41,7 @@
 
 	$query->execute();
 	
-	if (false === $query) {
+	if ($query ===  false) {
 
 		$output['status']['code'] = "400";
 		$output['status']['name'] = "executed";

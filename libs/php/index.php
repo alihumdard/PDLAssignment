@@ -21,8 +21,6 @@
     <!-- Custom Stylesheet -->
     <link rel="stylesheet" href="assets/style.css">
 
-    <!-- Custom JavaScript -->
-    <script src="assets/app.js"></script>
 </head>
 
 <body>
@@ -82,147 +80,100 @@
             <!-- pesonel tab and table -->
             <div class="tab-pane show active" id="personnel-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
                 <table class="table table-hover">
-                    <tr>
-                        <td class="align-middle text-nowrap">
-                            Ace, Tamarra
-                        </td>
-                        <td class="align-middle text-nowrap d-none d-md-table-cell">
-                            Support
-                        </td>
-                        <td class="align-middle text-nowrap d-none d-md-table-cell">
-                            Munich
-                        </td>
-                        <td class="align-middle text-nowrap d-none d-md-table-cell">
-                            tacem@vinaora.com
-                        </td>
-                        <td class="text-end text-nowrap">
-                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editPersonnelModal" data-id="23">
-                                <i class="fa-solid fa-pencil fa-fw"></i>
-                            </button>
-                            <button type="button" class="btn btn-primary btn-sm deletePersonnelBtn" data-id="23">
-                                <i class="fa-solid fa-trash fa-fw"></i>
-                            </button>
-                        </td>
-                    </tr>
-
+                    <tbody id="personal_data">
+                        <!-- loading data dynamically -->
+                    </tbody>
                 </table>
             </div>
 
             <!-- departments tab and table -->
             <div class="tab-pane" id="departments-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
                 <table class="table table-hover">
-                    <tbody>
-
+                    <tbody id="deparments_data">
+                        <!-- loading data dynamically -->
                     </tbody>
-                    <tr>
-                        <td class="align-middle text-nowrap">
-                            Human resources
-                        </td>
-                        <td class="align-middle text-nowrap d-none d-md-table-cell">
-                            London
-                        </td>
-                        <td class="align-middle text-end text-nowrap">
-                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#deleteDepartmentModal" data-id="1">
-                                <i class="fa-solid fa-pencil fa-fw"></i>
-                            </button>
-                            <button type="button" class="btn btn-primary btn-sm deleteDepartmentBtn" data-id="1">
-                                <i class="fa-solid fa-trash fa-fw"></i>
-                            </button>
-                        </td>
-                    </tr>
-
                 </table>
             </div>
 
             <!-- locations tab and table -->
             <div class="tab-pane" id="locations-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
                 <table class="table table-hover">
-                    <tr>
-                        <td class="align-middle text-nowrap">
-                            London
-                        </td>
-                        <td class="align-middle text-end text-nowrap">
-                            <button type="button" class="btn btn-primary btn-sm">
-                                <i class="fa-solid fa-pencil fa-fw"></i>
-                            </button>
-                            <button type="button" class="btn btn-primary btn-sm">
-                                <i class="fa-solid fa-trash fa-fw"></i>
-                            </button>
-                        </td>
-                    </tr>
-
+                    <tbody id="locations_data">
+                        <!-- loading data dynamically -->
+                    </tbody>
                 </table>
             </div>
 
         </div>
 
         <footer class="border-top text-center fw-bold">
+            <p class="fw-light my-3">Company Directory assignment by mika version 1.0</p>
+        </footer>
+    </section>
 
-            <p class="fw-light my-3">Company Directory version 1.0</p>
+    <div id="editPersonnelModal" class="modal fade" tabindex="-1" data-bs-backdrop="false" data-bs-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
 
-        </footer </section>
+        <!--   the last two classes centre the modal and, if the content is too long, ensures  -->
+        <!--   that the header and footer are always on display by making the body scroll -->
 
-        <div id="editPersonnelModal" class="modal fade" tabindex="-1" data-bs-backdrop="false" data-bs-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
 
-            <!--   the last two classes centre the modal and, if the content is too long, ensures  -->
-            <!--   that the header and footer are always on display by making the body scroll -->
+            <div class="modal-content shadow">
 
-            <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-header bg-primary bg-gradient text-white">
+                    <h5 class="modal-title">Edit employee</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
 
-                <div class="modal-content shadow">
+                <div class="modal-body">
 
-                    <div class="modal-header bg-primary bg-gradient text-white">
-                        <h5 class="modal-title">Edit employee</h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
+                    <form id="editPersonnelForm">
 
-                    <div class="modal-body">
+                        <input type="hidden" id="editPersonnelEmployeeID">
 
-                        <form id="editPersonnelForm">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="editPersonnelFirstName" placeholder="First name" required>
+                            <label for="editPersonnelFirstName">First name</label>
+                        </div>
 
-                            <input type="hidden" id="editPersonnelEmployeeID">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="editPersonnelLastName" placeholder="Last name" required>
+                            <label for="editPersonnelLastName">Last name</label>
+                        </div>
 
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="editPersonnelFirstName" placeholder="First name" required>
-                                <label for="editPersonnelFirstName">First name</label>
-                            </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="editPersonnelJobTitle" placeholder="Job title" required>
+                            <label for="editPersonnelJobTitle">Job Title</label>
+                        </div>
 
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="editPersonnelLastName" placeholder="Last name" required>
-                                <label for="editPersonnelLastName">Last name</label>
-                            </div>
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" id="editPersonnelEmailAddress" placeholder="Email address" required>
+                            <label for="editPersonnelEmailAddress">Email Address</label>
+                        </div>
 
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="editPersonnelJobTitle" placeholder="Job title" required>
-                                <label for="editPersonnelJobTitle">Job Title</label>
-                            </div>
+                        <div class="form-floating">
+                            <select class="form-select" id="editPersonnelDepartment" placeholder="Department">
+                            </select>
+                            <label for="editPersonnelDepartment">Department</label>
+                        </div>
 
-                            <div class="form-floating mb-3">
-                                <input type="email" class="form-control" id="editPersonnelEmailAddress" placeholder="Email address" required>
-                                <label for="editPersonnelEmailAddress">Email Address</label>
-                            </div>
+                    </form>
 
-                            <div class="form-floating">
-                                <select class="form-select" id="editPersonnelDepartment" placeholder="Department">
-                                </select>
-                                <label for="editPersonnelDepartment">Department</label>
-                            </div>
+                </div>
 
-                        </form>
-
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="submit" form="editPersonnelForm" class="btn btn-outline-primary btn-sm myBtn">SAVE</button>
-                        <button type="button" class="btn btn-outline-primary btn-sm myBtn" data-bs-dismiss="modal">CANCEL</button>
-                    </div>
-
+                <div class="modal-footer">
+                    <button type="submit" form="editPersonnelForm" class="btn btn-outline-primary btn-sm myBtn">SAVE</button>
+                    <button type="button" class="btn btn-outline-primary btn-sm myBtn" data-bs-dismiss="modal">CANCEL</button>
                 </div>
 
             </div>
 
         </div>
 
+    </div>
+
+    <!-- Custom JavaScript -->
+    <script src="assets/app.js"></script>
 
 </body>
 
