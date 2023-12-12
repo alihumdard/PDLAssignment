@@ -122,7 +122,6 @@ $(document).ready(function () {
         });
     });
 
-
     // edit deparment informations...
     $("#editDepartmentModal").on("show.bs.modal", function (e) {
         $.ajax({
