@@ -38,9 +38,7 @@
 	// $_REQUEST used for development / debugging. Remember to change to $_POST for production
 
 	$query = $conn->prepare('INSERT INTO department (name, locationID) VALUES(?,?)');
-
 	$query->bind_param("si", $_REQUEST['name'], $_REQUEST['locationID']);
-
 	$query->execute();
 	
 	if (false === $query) {
