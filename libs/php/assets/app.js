@@ -48,6 +48,7 @@ $(document).ready(function () {
 
     });
 
+    // edit personal informations...
     $("#editPersonnelModal").on("show.bs.modal", function (e) {
         $.ajax({
             url:
@@ -95,12 +96,112 @@ $(document).ready(function () {
         });
     });
 
-    // Executes when the form button with type="submit" is clicked
+    // delete personal informations...
+    $(document).on('click', '.deletePersonnelBtn', function (e) {
+        var rowToDelete = $(this).closest('tr'); 
+        $.ajax({
+            url: "deletePersonnelByID.php",
+            type: "POST",
+            dataType: "json",
+            data: {
+                id: $(this).data("id")
+            },
+            success: function (result) {
+                var resultCode = result.status.code;
+                if (resultCode == 200) {
+                    rowToDelete.fadeOut(500, function () {
+                        $(this).remove();  // Remove the row
+                    })
+                } else {
+                    alert('Record is not deleted');
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert('Record is not deleted');
+            }
+        });
+    });
+
+
+    // edit deparment informations...
+    $("#editDepartmentModal").on("show.bs.modal", function (e) {
+        $.ajax({
+            url:
+                "getDepartmentByID.php",
+            type: "POST",
+            dataType: "json",
+            data: {
+                id: $(e.relatedTarget).attr("data-id")
+            },
+            success: function (result) {
+                var resultCode = result.status.code;
+
+                if (resultCode == 200) {
+                    console.log(result);
+                    // Update the hidden input with the employee id so that
+                    // it can be referenced when the form is submitted
+                    $("#editDepartmentId").val(result.data.id);
+                    $("#editDepartmentName").val(result.data.name);
+                    $("#editDepartmentLocation").html("");
+
+                    $.each(result.data.location, function () {
+                        $("#editDepartmentLocation").append(
+                            $("<option>", {
+                                value: this.id,
+                                text: this.name
+                            })
+                        );
+                    });
+
+                    $("#editDepartmentLocation").val(result.data.locationID);
+
+                } else {
+                    $("#editDepartmentModal .modal-title").replaceWith(
+                        "Error retrieving data"
+                    );
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $("#editDepartmentModal .modal-title").replaceWith(
+                    "Error retrieving data"
+                );
+            }
+        });
+    });
+
+    // edit deparment informations...
+    $("#editLocationModal").on("show.bs.modal", function (e) {
+        $.ajax({
+            url:
+                "getLocationByID.php",
+            type: "POST",
+            dataType: "json",
+            data: {
+                id: $(e.relatedTarget).attr("data-id")
+            },
+            success: function (result) {
+                var resultCode = result.status.code;
+
+                if (resultCode == 200) {
+                    console.log(result);
+                    $("#editLocationId").val(result.data.id);
+                    $("#editLocationName").val(result.data.name);
+                } else {
+                    $("#editLocationModal .modal-title").replaceWith(
+                        "Error retrieving data"
+                    );
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $("#editLocationModal .modal-title").replaceWith(
+                    "Error retrieving data"
+                );
+            }
+        });
+    });
+
+    // save personal informations ...
     $("#editPersonnelForm").on("submit", function (e) {
-
-        // Executes when the form button with type="submit" is clicked
-        // stop the default browser behviour
-
         e.preventDefault();
 
         // AJAX call to save form data
@@ -171,7 +272,7 @@ $(document).ready(function () {
                             + department.location +
                             '</td>' +
                             '<td class="text-end text-nowrap">' +
-                            '<button type="button" class="btn btn-primary btn-sm m-1" data-bs-toggle="modal" data-bs-target="#deleteDepartmentModal" data-id="' + department.id + '">' +
+                            '<button type="button" class="btn btn-primary btn-sm m-1" data-bs-toggle="modal" data-bs-target="#editDepartmentModal" data-id="' + department.id + '">' +
                             '<i class="fa-solid fa-pencil fa-fw"></i>' +
                             '</button>' +
                             '<button type="button" class="btn btn-primary btn-sm deleteDepartmentBtn m-2" data-id="' + department.id + '">' +
@@ -213,7 +314,7 @@ $(document).ready(function () {
                             + location.name +
                             '</td>' +
                             '<td class="text-end text-nowrap">' +
-                            '<button type="button" class="btn btn-primary btn-sm m-1" data-bs-toggle="modal" data-bs-target="#deleteDepartmentModal" data-id="' + location.id + '">' +
+                            '<button type="button" class="btn btn-primary btn-sm m-1" data-bs-toggle="modal" data-bs-target="#editLocationModal" data-id="' + location.id + '">' +
                             '<i class="fa-solid fa-pencil fa-fw"></i>' +
                             '</button>' +
                             '<button type="button" class="btn btn-primary btn-sm deleteDepartmentBtn m-2" data-id="' + location.id + '">' +

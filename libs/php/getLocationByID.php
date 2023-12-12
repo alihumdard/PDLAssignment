@@ -1,11 +1,10 @@
 <?php
 
 	// example use from browser
-	// use insertDepartment.php first to create new dummy record and then specify it's id in the command below
-	// http://localhost/companydirectory/libs/php/deleteDepartmentByID.php?id=<id>
+	// http://localhost/companydirectory/libs/php/getDepartmentByID.php?id=<id>
 
-	// remove next two lines for production
-	
+	// remove next two lines for production	
+
 	ini_set('display_errors', 'On');
 	error_reporting(E_ALL);
 
@@ -31,28 +30,31 @@
 	// SQL statement accepts parameters and so is prepared to avoid SQL injection.
 	// $_REQUEST used for development / debugging. Remember to change to $_POST for production
 
-	$query = $conn->prepare('DELETE FROM department WHERE id = ?');
+	$query = $conn->prepare('SELECT id, name from location WHERE id =  ?');
 	$query->bind_param("i", $_REQUEST['id']);
 	$query->execute();
 	
-	if (false === $query) {
+	if ($query ===  false) {
 		$output['status']['code'] = "400";
 		$output['status']['name'] = "executed";
 		$output['status']['description'] = "query failed";	
 		$output['data'] = [];
-		mysqli_close($conn);
 		echo json_encode($output); 
+		mysqli_close($conn);
 		exit;
 	}
 
-	$output['status']['code'] = "200";
-	$output['status']['name'] = "ok";
+	$result = $query->get_result();
+   	$data = mysqli_fetch_assoc($result);
+
+	$output['status']['code']		 = "200";
+	$output['status']['name'] 		 = "ok";
 	$output['status']['description'] = "success";
-	$output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
-	$output['data'] = [];
-	
-	mysqli_close($conn);
+	$output['status']['returnedIn']  = (microtime(true) - $executionStartTime) / 1000 . " ms";
+	$output['data'] 	      		 = $data;
 
 	echo json_encode($output); 
+
+	mysqli_close($conn);
 
 ?>
