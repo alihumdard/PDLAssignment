@@ -49,22 +49,22 @@
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="editDepartmentForm">
-                    <input type="hidden" id="editDepartmentId">
+                <form id="editDepartmentForm" class="adddata" action="insertDepartment.php" method="post">
+                    <input type="hidden" id="editDepartmentId" name="id">
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="editDepartmentName" placeholder="deparment name" required>
+                        <input type="text" class="form-control" name="name" id="editDepartmentName" placeholder="deparment name" required>
                         <label for="editDepartmentName">Department name</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <select class="form-select" id="editDepartmentLocation" placeholder="Department">
+                        <select class="form-select" name="locationID" id="editDepartmentLocation" placeholder="Department">
                         </select>
                         <label for="editDepartmentLocation">Location</label>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="submit" form="editPersonnelForm" class="btn btn-outline-primary btn-sm myBtn">SAVE</button>
-                <button type="button" class="btn btn-outline-primary btn-sm myBtn" data-bs-dismiss="modal">CANCEL</button>
+                <button type="button" class="btn btn-outline-primary btn-sm myBtn closeModelBtn" data-bs-dismiss="modal">CANCEL</button>
+                <button type="submit" form="editDepartmentForm" class="btn btn-outline-primary btn-sm myBtn">SAVE</button>
             </div>
         </div>
     </div>
