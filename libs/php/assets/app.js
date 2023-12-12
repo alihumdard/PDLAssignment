@@ -6,6 +6,12 @@ $(document).ready(function () {
 
     });
 
+    $("#filterBtn").click(function () {
+
+        // Open a modal of your own design that allows the user to apply a filter to the personnel table on either department or location
+
+    });
+
     $("#refreshBtn").click(function () {
         if ($("#personnelBtn").hasClass("active")) {
             load_personalTable();
@@ -18,16 +24,22 @@ $(document).ready(function () {
         }
     });
 
-    $("#filterBtn").click(function () {
-
-        // Open a modal of your own design that allows the user to apply a filter to the personnel table on either department or location
-
-    });
-
     $("#addBtn").click(function () {
-
-        // Replicate the logic of the refresh button click to open the add modal for the table that is currently on display
-
+        if ($("#personnelBtn").hasClass("active")) {
+            $("#editPersonnelForm")[0].reset();
+            $("#editPersonnelModal .modal-title").text('Add Person');
+            $("#editPersonnelModal").modal('show');
+        } else {
+            if ($("#departmentsBtn").hasClass("active")) {
+                $("#editDepartmentForm")[0].reset();
+                $("#editDepartmentModal .modal-title").text('Add Department');
+                $("#editDepartmentModal").modal('show');
+            } else {
+                $("#editLocationForm")[0].reset();
+                $("#editLocationModal .modal-title").text('Add Location');
+                $("#editLocationModal").modal('show');
+            }
+        }
     });
 
     $("#personnelBtn").click(function () {
@@ -50,55 +62,59 @@ $(document).ready(function () {
 
     // edit personal informations...
     $("#editPersonnelModal").on("show.bs.modal", function (e) {
-        $.ajax({
-            url:
-                "getPersonnelByID.php",
-            type: "POST",
-            dataType: "json",
-            data: {
-                id: $(e.relatedTarget).attr("data-id")
-            },
-            success: function (result) {
-                var resultCode = result.status.code;
+        let rowId = $(e.relatedTarget).data("id") ?? '';
+        if (rowId) {
+            $("#editPersonnelModal .modal-title").text('Edit Person');
+            $.ajax({
+                url:
+                    "getPersonnelByID.php",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    id: $(e.relatedTarget).attr("data-id")
+                },
+                success: function (result) {
+                    var resultCode = result.status.code;
 
-                if (resultCode == 200) {
-                    // Update the hidden input with the employee id so that
-                    // it can be referenced when the form is submitted
-                    $("#editPersonnelEmployeeID").val(result.data.personnel[0].id);
-                    $("#editPersonnelFirstName").val(result.data.personnel[0].firstName);
-                    $("#editPersonnelLastName").val(result.data.personnel[0].lastName);
-                    $("#editPersonnelJobTitle").val(result.data.personnel[0].jobTitle);
-                    $("#editPersonnelEmailAddress").val(result.data.personnel[0].email);
-                    $("#editPersonnelDepartment").html("");
+                    if (resultCode == 200) {
+                        // Update the hidden input with the employee id so that
+                        // it can be referenced when the form is submitted
+                        $("#editPersonnelEmployeeID").val(result.data.personnel[0].id);
+                        $("#editPersonnelFirstName").val(result.data.personnel[0].firstName);
+                        $("#editPersonnelLastName").val(result.data.personnel[0].lastName);
+                        $("#editPersonnelJobTitle").val(result.data.personnel[0].jobTitle);
+                        $("#editPersonnelEmailAddress").val(result.data.personnel[0].email);
+                        $("#editPersonnelDepartment").html("");
 
-                    $.each(result.data.department, function () {
-                        $("#editPersonnelDepartment").append(
-                            $("<option>", {
-                                value: this.id,
-                                text: this.name
-                            })
+                        $.each(result.data.department, function () {
+                            $("#editPersonnelDepartment").append(
+                                $("<option>", {
+                                    value: this.id,
+                                    text: this.name
+                                })
+                            );
+                        });
+
+                        $("#editPersonnelDepartment").val(result.data.personnel[0].departmentID);
+
+                    } else {
+                        $("#editPersonnelModal .modal-title").replaceWith(
+                            "Error retrieving data"
                         );
-                    });
-
-                    $("#editPersonnelDepartment").val(result.data.personnel[0].departmentID);
-
-                } else {
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
                     $("#editPersonnelModal .modal-title").replaceWith(
                         "Error retrieving data"
                     );
                 }
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                $("#editPersonnelModal .modal-title").replaceWith(
-                    "Error retrieving data"
-                );
-            }
-        });
+            });
+        }
     });
 
     // delete personal informations...
     $(document).on('click', '.deletePersonnelBtn', function (e) {
-        var rowToDelete = $(this).closest('tr'); 
+        var rowToDelete = $(this).closest('tr');
         $.ajax({
             url: "deletePersonnelByID.php",
             type: "POST",
@@ -124,77 +140,145 @@ $(document).ready(function () {
 
     // edit deparment informations...
     $("#editDepartmentModal").on("show.bs.modal", function (e) {
-        $.ajax({
-            url:
-                "getDepartmentByID.php",
-            type: "POST",
-            dataType: "json",
-            data: {
-                id: $(e.relatedTarget).attr("data-id")
-            },
-            success: function (result) {
-                var resultCode = result.status.code;
+        let rowId = $(e.relatedTarget).data("id") ?? '';
+        if (rowId) {
+            $("#editDepartmentModal .modal-title").text('Edit Department');
+            $.ajax({
+                url:
+                    "getDepartmentByID.php",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    id: $(e.relatedTarget).attr("data-id")
+                },
+                success: function (result) {
+                    var resultCode = result.status.code;
 
-                if (resultCode == 200) {
-                    console.log(result);
-                    // Update the hidden input with the employee id so that
-                    // it can be referenced when the form is submitted
-                    $("#editDepartmentId").val(result.data.id);
-                    $("#editDepartmentName").val(result.data.name);
-                    $("#editDepartmentLocation").html("");
+                    if (resultCode == 200) {
+                        console.log(result);
+                        // Update the hidden input with the employee id so that
+                        // it can be referenced when the form is submitted
+                        $("#editDepartmentId").val(result.data.id);
+                        $("#editDepartmentName").val(result.data.name);
+                        $("#editDepartmentLocation").html("");
 
-                    $.each(result.data.location, function () {
-                        $("#editDepartmentLocation").append(
-                            $("<option>", {
-                                value: this.id,
-                                text: this.name
-                            })
+                        $.each(result.data.location, function () {
+                            $("#editDepartmentLocation").append(
+                                $("<option>", {
+                                    value: this.id,
+                                    text: this.name
+                                })
+                            );
+                        });
+
+                        $("#editDepartmentLocation").val(result.data.locationID);
+
+                    } else {
+                        $("#editDepartmentModal .modal-title").replaceWith(
+                            "Error retrieving data"
                         );
-                    });
-
-                    $("#editDepartmentLocation").val(result.data.locationID);
-
-                } else {
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
                     $("#editDepartmentModal .modal-title").replaceWith(
                         "Error retrieving data"
                     );
                 }
+            });
+        }
+    });
+
+    // delete Department informations...
+    $(document).on('click', '.deleteDepartmentBtn', function (e) {
+        var rowToDelete = $(this).closest('tr');
+        $.ajax({
+            url: "deleteDepartmentByID.php",
+            type: "POST",
+            dataType: "json",
+            data: {
+                id: $(this).data("id")
+            },
+            success: function (result) {
+                var resultCode = result.status.code;
+                if (resultCode == 200) {
+                    rowToDelete.fadeOut(500, function () {
+                        $(this).remove();  // Remove the row
+                    })
+                }
+                else if (resultCode == 500) {
+                    alert(result.status.description);
+                }
+                else {
+                    alert('Deparment is not deleted');
+                }
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                $("#editDepartmentModal .modal-title").replaceWith(
-                    "Error retrieving data"
-                );
+                alert('Deparment is not deleted');
             }
         });
     });
 
-    // edit deparment informations...
+    // edit location informations...
     $("#editLocationModal").on("show.bs.modal", function (e) {
-        $.ajax({
-            url:
-                "getLocationByID.php",
-            type: "POST",
-            dataType: "json",
-            data: {
-                id: $(e.relatedTarget).attr("data-id")
-            },
-            success: function (result) {
-                var resultCode = result.status.code;
+        let rowId = $(e.relatedTarget).data("id") ?? '';
+        if (rowId) {
+            $("#editLocationModal .modal-title").text('Edit Location');
+            $.ajax({
+                url:
+                    "getLocationByID.php",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    id: $(e.relatedTarget).attr("data-id")
+                },
+                success: function (result) {
+                    var resultCode = result.status.code;
 
-                if (resultCode == 200) {
-                    console.log(result);
-                    $("#editLocationId").val(result.data.id);
-                    $("#editLocationName").val(result.data.name);
-                } else {
+                    if (resultCode == 200) {
+                        console.log(result);
+                        $("#editLocationId").val(result.data.id);
+                        $("#editLocationName").val(result.data.name);
+                    } else {
+                        $("#editLocationModal .modal-title").replaceWith(
+                            "Error retrieving data"
+                        );
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
                     $("#editLocationModal .modal-title").replaceWith(
                         "Error retrieving data"
                     );
                 }
+            });
+        }
+    });
+
+    // delete Location informations...
+    $(document).on('click', '.deleteLocationBtn', function (e) {
+        var rowToDelete = $(this).closest('tr');
+        $.ajax({
+            url: "deleteLocationByID.php",
+            type: "POST",
+            dataType: "json",
+            data: {
+                id: $(this).data("id")
+            },
+            success: function (result) {
+                var resultCode = result.status.code;
+                if (resultCode == 200) {
+                    rowToDelete.fadeOut(500, function () {
+                        $(this).remove();  // Remove the row
+                    })
+                }
+                else if (resultCode == 500) {
+                    alert(result.status.description);
+                }
+                else {
+                    alert('Location is not deleted');
+                }
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                $("#editLocationModal .modal-title").replaceWith(
-                    "Error retrieving data"
-                );
+                alert('Location is not deleted');
             }
         });
     });
@@ -221,7 +305,7 @@ $(document).ready(function () {
                     // Loop through the data and construct the HTML string
                     $.each(response.data, function (index, person) {
                         htmlString += '<tr>' +
-                            '<td class="align-middle text-nowrap">' + person.lastName + ', ' + person.firstName + '</td>' +
+                            '<td class="align-middle text-nowrap">' + person.firstName + ', ' + person.lastName + '</td>' +
                             '<td class="align-middle text-nowrap d-none d-md-table-cell">' + person.department + '</td>' +
                             '<td class="align-middle text-nowrap d-none d-md-table-cell">' + person.location + '</td>' +
                             '<td class="align-middle text-nowrap d-none d-md-table-cell">' + person.email + '</td>' +
@@ -316,7 +400,7 @@ $(document).ready(function () {
                             '<button type="button" class="btn btn-primary btn-sm m-1" data-bs-toggle="modal" data-bs-target="#editLocationModal" data-id="' + location.id + '">' +
                             '<i class="fa-solid fa-pencil fa-fw"></i>' +
                             '</button>' +
-                            '<button type="button" class="btn btn-primary btn-sm deleteDepartmentBtn m-2" data-id="' + location.id + '">' +
+                            '<button type="button" class="btn btn-primary btn-sm deleteLocationBtn m-2" data-id="' + location.id + '">' +
                             '<i class="fa-solid fa-trash fa-fw"></i>' +
                             '</button>' +
                             '</td>' +

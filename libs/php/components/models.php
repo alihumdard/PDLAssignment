@@ -79,7 +79,7 @@
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="editPersonnelForm">
+                <form id="editLocationForm">
                     <input type="hidden" id="editLocationId">
                     <div class="form-floating mb-1">
                         <input type="text" class="form-control" id="editLocationName" placeholder="location name" required>
