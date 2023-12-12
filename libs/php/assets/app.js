@@ -1,10 +1,34 @@
 $(document).ready(function () {
 
-    $("#searchInp").on("keyup", function () {
+    $("#searchInp").on("input", function () {
+        let inputString = $("#searchInp").val().toLowerCase();
+        $(".table-row").hide();
 
-        // your code
-
+        if ($("#personnelBtn").hasClass("active")) {
+            $("#personal_data .table-row").filter(function () {
+                let tdContents = $(this).find('td').map(function () {
+                    return $(this).text().toLowerCase();
+                }).get();
+                return tdContents.some(function (content) {
+                    return content.includes(inputString);
+                });
+            }).show();
+        } else if ($("#departmentsBtn").hasClass("active")) {
+            $("#deparments_data .table-row").filter(function () {
+                let firstTdContent = $(this).find('td:first').text().toLowerCase();
+                if (firstTdContent.includes(inputString)) {
+                    return true;
+                }
+                let secondTdContent = $(this).find('td:nth-child(2)').text().toLowerCase();
+                return secondTdContent.includes(inputString);
+            }).show();
+        } else {
+            $("#locations_data .table-row").filter(function () {
+                return $(this).find('td:first').text().toLowerCase().includes(inputString);
+            }).show();
+        }
     });
+
 
     $("#filterBtn").click(function () {
 
@@ -33,6 +57,7 @@ $(document).ready(function () {
             if ($("#departmentsBtn").hasClass("active")) {
                 $("#editDepartmentForm")[0].reset();
                 $("#editDepartmentModal .modal-title").text('Add Department');
+                getAllLocations('editDepartmentLocation');
                 $("#editDepartmentModal").modal('show');
             } else {
                 $("#editLocationForm")[0].reset();
@@ -43,21 +68,15 @@ $(document).ready(function () {
     });
 
     $("#personnelBtn").click(function () {
-
-        // Call function to refresh personnel table
-
+        load_personalTable();// Call function to refresh personnel table
     });
 
     $("#departmentsBtn").click(function () {
-
-        // Call function to refresh department table
-
+        load_deparmentTable(); // Call function to refresh department table
     });
 
     $("#locationsBtn").click(function () {
-
-        // Call function to refresh location table
-
+        load_locationTable();        // Call function to refresh location table
     });
 
     // edit personal informations...
@@ -284,11 +303,35 @@ $(document).ready(function () {
     });
 
     // save personal informations ...
-    $("#editPersonnelForm").on("submit", function (e) {
+    $(".adddata").on("submit", function (e) {
         e.preventDefault();
+        var url_name = $(this).attr('action');
+        var form_method = $(this).attr('method');
+        var formData = $(this).serialize();
+        $.ajax({
+            url: url_name,
+            type: form_method,
+            dataType: 'json',
+            data: formData,
+            success: function (response) {
 
-        // AJAX call to save form data
-
+                let resultCode = response.status.code;
+                let resultName = response.status.name;
+                let resultDesc = response.status.description;
+                if (resultCode == 200) {
+                    if (resultName == 'department') {
+                        load_deparmentTable();
+                        $('.closeModelBtn').trigger('click');
+                    }
+                } else {
+                    console.error('No data received or invalid response structure');
+                    alert('No data received or invalid response structure');
+                }
+            },
+            error: function (error) {
+                console.error('Error fetching data:', error);
+            }
+        });
     });
 
     function load_personalTable() {
@@ -304,7 +347,7 @@ $(document).ready(function () {
                 if (response && response.data) {
                     // Loop through the data and construct the HTML string
                     $.each(response.data, function (index, person) {
-                        htmlString += '<tr>' +
+                        htmlString += '<tr class="table-row">' +
                             '<td class="align-middle text-nowrap">' + person.firstName + ', ' + person.lastName + '</td>' +
                             '<td class="align-middle text-nowrap d-none d-md-table-cell">' + person.department + '</td>' +
                             '<td class="align-middle text-nowrap d-none d-md-table-cell">' + person.location + '</td>' +
@@ -347,7 +390,7 @@ $(document).ready(function () {
                 // Check if the response has data
                 if (response && response.data) {
                     $.each(response.data, function (index, department) {
-                        htmlString += '<tr>' +
+                        htmlString += '<tr class="table-row">' +
                             '<td class="align-middle text-nowrap">'
                             + department.name +
                             '</td>' +
@@ -392,7 +435,7 @@ $(document).ready(function () {
                 // Check if the response has data
                 if (response && response.data) {
                     $.each(response.data, function (index, location) {
-                        htmlString += '<tr>' +
+                        htmlString += '<tr class="table-row" >' +
                             '<td class="align-middle text-nowrap">'
                             + location.name +
                             '</td>' +
@@ -411,6 +454,34 @@ $(document).ready(function () {
                     $('#locations_data').html(htmlString);
 
                     // alert('Data location successfully!');
+                } else {
+                    console.error('No data received or invalid response structure');
+                    alert('No data received or invalid response structure');
+                }
+            },
+            error: function (error) {
+                console.error('Error fetching data:', error);
+            }
+        });
+    }
+
+    function getAllLocations(appendId) {
+        $.ajax({
+            url: 'getAllLocations.php',
+            type: 'GET',
+            dataType: 'json',
+            success: function (response) {
+
+                var resultCode = response.status.code;
+                if (resultCode == 200) {
+                    $.each(response.data, function () {
+                        $("#" + appendId).append(
+                            $("<option>", {
+                                value: this.id,
+                                text: this.name
+                            })
+                        );
+                    });
                 } else {
                     console.error('No data received or invalid response structure');
                     alert('No data received or invalid response structure');

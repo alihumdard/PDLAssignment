@@ -34,12 +34,21 @@
 
 	}	
 
-	// SQL statement accepts parameters and so is prepared to avoid SQL injection.
-	// $_REQUEST used for development / debugging. Remember to change to $_POST for production
-
-	$query = $conn->prepare('INSERT INTO department (name, locationID) VALUES(?,?)');
-	$query->bind_param("si", $_REQUEST['name'], $_REQUEST['locationID']);
+	$desc = '';
+	if (isset($_REQUEST['id']) && !empty($_REQUEST['id'])) {
+		// Update
+		$query = $conn->prepare('UPDATE department SET name = ?, locationID = ? WHERE id = ?');
+		$query->bind_param("sii", $_REQUEST['name'], $_REQUEST['locationID'], $_REQUEST['id']);
+		$desc = "deparment updated  successfully ";
+	} else {
+		// Insert
+		$query = $conn->prepare('INSERT INTO department (name, locationID) VALUES (?, ?)');
+		$query->bind_param("si", $_REQUEST['name'], $_REQUEST['locationID']);
+		$desc = "deparment added  successfully ";
+	}
+	
 	$query->execute();
+	
 	
 	if (false === $query) {
 
@@ -57,8 +66,8 @@
 	}
 
 	$output['status']['code'] = "200";
-	$output['status']['name'] = "ok";
-	$output['status']['description'] = "success";
+	$output['status']['name'] = "department";
+	$output['status']['description'] = $desc;
 	$output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
 	$output['data'] = [];
 	
