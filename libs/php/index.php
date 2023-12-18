@@ -70,7 +70,6 @@
                         <i class="fa-solid fa-map-location-dot fa-lg fa-fw"></i><span class="d-none d-sm-block">Locations</span>
                     </button>
                 </li>
-
             </ul>
 
         </div>

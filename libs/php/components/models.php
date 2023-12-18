@@ -7,34 +7,34 @@
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="editPersonnelForm">
+                <form id="editPersonnelForm" class="adddata" action="insertLocation.php" method="post">
                     <input type="hidden" id="editPersonnelEmployeeID">
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="editPersonnelFirstName" placeholder="First name" required>
+                        <input type="text" class="form-control" name="firstName" id="editPersonnelFirstName" placeholder="First name" required>
                         <label for="editPersonnelFirstName">First name</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="editPersonnelLastName" placeholder="Last name" required>
+                        <input type="text" class="form-control" id="editPersonnelLastName" name="lasttName" placeholder="Last name" required>
                         <label for="editPersonnelLastName">Last name</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="editPersonnelJobTitle" placeholder="Job title" required>
+                        <input type="text" class="form-control" id="editPersonnelJobTitle" name="jobTitle" placeholder="Job title" required>
                         <label for="editPersonnelJobTitle">Job Title</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="editPersonnelEmailAddress" placeholder="Email address" required>
+                        <input type="email" class="form-control" id="editPersonnelEmailAddress" name="email" placeholder="Email address" required>
                         <label for="editPersonnelEmailAddress">Email Address</label>
                     </div>
                     <div class="form-floating">
-                        <select class="form-select" id="editPersonnelDepartment" placeholder="Department">
+                        <select class="form-select" id="editPersonnelDepartment"  name="departmentID"placeholder="Department">
                         </select>
                         <label for="editPersonnelDepartment">Department</label>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="submit" form="editPersonnelForm" class="btn btn-outline-primary btn-sm myBtn">SAVE</button>
                 <button type="button" class="btn btn-outline-primary btn-sm myBtn" data-bs-dismiss="modal">CANCEL</button>
+                <button type="submit" form="editPersonnelForm" class="btn btn-outline-primary btn-sm myBtn">SAVE</button>
             </div>
         </div>
     </div>
@@ -76,20 +76,20 @@
         <div class="modal-content shadow">
             <div class="modal-header bg-primary bg-gradient text-white">
                 <h5 class="modal-title">Edit Location</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close btn-close-white closeModelBtn" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="editLocationForm">
+                <form id="editLocationForm" class="adddata" action="insertLocation.php" method="post">
                     <input type="hidden" id="editLocationId">
                     <div class="form-floating mb-1">
-                        <input type="text" class="form-control" id="editLocationName" placeholder="location name" required>
+                        <input type="text" class="form-control" id="editLocationName" name="name" placeholder="location name" required>
                         <label for="editLocationName">Location name</label>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="submit" form="editPersonnelForm" class="btn btn-outline-primary btn-sm myBtn">SAVE</button>
-                <button type="button" class="btn btn-outline-primary btn-sm myBtn" data-bs-dismiss="modal">CANCEL</button>
+                <button type="button" class="btn btn-outline-primary btn-sm myBtn closeModelBtn" data-bs-dismiss="modal">CANCEL</button>
+                <button type="submit" form="editLocationForm" class="btn btn-outline-primary btn-sm myBtn">SAVE</button>
             </div>
         </div>
     </div>
