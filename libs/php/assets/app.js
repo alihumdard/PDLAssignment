@@ -319,9 +319,12 @@ $(document).ready(function () {
                 let resultName = response.status.name;
                 let resultDesc = response.status.description;
                 if (resultCode == 200) {
+                    $('.closeModelBtn').trigger('click');
                     if (resultName == 'department') {
                         load_deparmentTable();
-                        $('.closeModelBtn').trigger('click');
+                    }
+                    if (resultName == 'location') {
+                        load_locationTable(); 
                     }
                 } else {
                     console.error('No data received or invalid response structure');
